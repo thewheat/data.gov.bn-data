@@ -1,6 +1,6 @@
 // Dimensions of sunburst.
 var width = 750;
-var height = 600;
+var height = 400;
 var radius = Math.min(width, height) / 2;
 
 // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
@@ -238,13 +238,14 @@ function initializeBreadcrumbTrail() {
 function breadcrumbPoints(d, i) {
   var points = [];
   points.push("0,0");
-  points.push(b.w*5 + ",0");
-  points.push(b.w*5 + b.t + "," + (b.h / 2));
-  points.push(b.w*5 + "," + b.h);
+  points.push(4.2 * b.w + ",0");
+  points.push(4.2 * b.w + b.t + "," + (b.h / 2));
+  points.push(4.2 * b.w + "," + b.h);
   points.push("0," + b.h);
   if (i > 0) { // Leftmost breadcrumb; don't include 6th vertex.
     points.push(b.t + "," + (b.h / 2));
   }
+  console.log(i, points);
   return points.join(" ");
 }
 
@@ -272,7 +273,7 @@ function updateBreadcrumbs(nodeArray, percentageString) {
 
   // Set position for entering and updating nodes.
   g.attr("transform", function(d, i) {
-    return "translate(" + i * (b.w + b.s) + ", 0)";
+    return "translate(" + 4.2 * i * (b.w + b.s) + ", 0)";
   });
 
   // Remove exiting nodes.
@@ -280,9 +281,9 @@ function updateBreadcrumbs(nodeArray, percentageString) {
 
   // Now move and update the percentage at the end.
   d3.select("#trail").select("#endlabel")
-      .attr("x", (nodeArray.length + 0.5) * (b.w + b.s))
-      .attr("y", b.h / 2)
-      .attr("dy", "0.35em")
+      .attr("x", (nodeArray.length + 0.5) * 3 * (b.w + b.s))
+      .attr("y", b.h / 2 * 3)
+      .attr("dy", "0.3.5em")
       .attr("text-anchor", "middle")
       .text(percentageString);
 
@@ -296,7 +297,7 @@ function drawLegend() {
 
   // Dimensions of legend item: width, height, spacing, radius of rounded rect.
   var li = {
-    w: 75*3, h: 30, s: 3, r: 3
+    w: 75*4.5, h: 30, s: 3, r: 3
   };
 
   var legend = d3.select("#legend").append("svg:svg")
