@@ -1,4 +1,4 @@
-# Data extractiong from data.gov.bn
+# Data extraction from data.gov.bn
 
 for [Brunei Geek Meet #6 - all about that data](http://www.meetup.com/BruneiGeekMeet/events/219892386/)
 
