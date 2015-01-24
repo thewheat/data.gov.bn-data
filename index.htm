@@ -60,6 +60,7 @@
 		</div>
 		<div class="col-md-9">
 			<h3>Results:</h3>
+			<span ng-show="loading">Loading....</span>
 			<ol class="datasets">
 				<li ng-repeat="item in items | filter:filterTitle | filter:filterCategory | filter:filterPublisher " class="">
 					<div class='main'><a class='primary' href="{{item.details}}">{{item.title}}</a></div>
@@ -78,7 +79,6 @@
 		</div>
 </div>
 
-    <script type="text/javascript" src="dist/data.gov.bn-object.json"></script>
 	<script src="bower_components/angular/angular.min.js"></script>
 	<script>
 		"use strict";
@@ -98,6 +98,7 @@
 			return values;
 		}
 		function dataGovBn($scope, $filter, $http){
+			$scope.loading = true;
 			$http.get("dist/data.gov.bn.json").success(function(data) {
 				for(var i = 0; i < data.length; i++){
 					for(var j = 0; j < data[i].datasets.length; j++){
@@ -107,6 +108,7 @@
 				$scope.categories = unique(data, 'category').sort();
 				$scope.publishers = unique(data, 'publisher').sort();
 		    	$scope.items = data;
+		    	$scope.loading = false;
 			});
 
 			$scope.filterOnAttributeInArray = function(item, array, attributeName){
