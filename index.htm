@@ -3,40 +3,43 @@
 <title>data.gov.bn</title>
 	<!-- mobile viewport -->
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
-    <!-- ios webapp - hide safari toolbar -->
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<!-- ios webapp - hide safari toolbar -->
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
 	<!-- icons, ipad3, iphone retina, ipad, iphone -->
 	<!-- not working well with Android. Samsung browser seems to work, Chrome doesn't.... -->
-    <link rel="apple-touch-icon" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon" sizes="72x72"   href="ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon"                 href="ico/apple-touch-icon-57-precomposed.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon" sizes="72x72"   href="ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon"                 href="ico/apple-touch-icon-57-precomposed.png">
 	<link rel="shortcut icon"                    href="ico/favicon.png">
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<style>
-	h1{
-		font-weight: bold;
-		text-decoration: underline;
-	}
- 	ul.search, ol.datasets {
- 		padding: 0;
- 		list-style-type: none;
- 	}
- 	ol.datasets > li{
-		margin-bottom: 1em;
-		border: 1px solid #bbbbbb;
-		padding: 1em;
- 	}
- 	ol.datasets li .main{
-		font-weight: bold;
- 	}
- 	span.attribute{
- 		font-style: italic;
- 		font-weight: bold;
- 		font-size: smaller;
- 	}
+		h1{
+			font-weight: bold;
+			text-decoration: underline;
+		}
+		ul.search, ol.datasets {
+			padding: 0;
+			list-style-type: none;
+		}
+		ol.datasets > li{
+			margin-bottom: 1em;
+			border: 1px solid #bbbbbb;
+			padding: 1em;
+		}
+		ol.datasets li .main{
+			font-weight: bold;
+		}
+		span.attribute{
+			font-style: italic;
+			font-weight: bold;
+			font-size: smaller;
+		}
+		[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+			display: none !important;
+		}
 	</style>
 </head>
 <body ng-app>
@@ -46,13 +49,15 @@
 			<h3>Search</h3>
 			<input ng-model="title" placeholder="Search Title">
 			<h3>Categories</h3>
-			<ul class='search'>
+			<span ng-show="loading">Loading....</span>
+			<ul class='search ng-cloak'>
 				<li ng-repeat="category in categories"> 
 					<label><input type='checkbox' ng-model='categories[category]' value='{{category}}'> {{category}}</label>
 				</li>
 			</ul>
 			<h3>Publishers</h3>
-			<ul class='search'>
+			<span ng-show="loading">Loading....</span>
+			<ul class='search ng-cloak'>
 				<li ng-repeat="publisher in publishers"> 
 					<label><input type='checkbox' ng-model='publishers[publisher]' value='{{publisher}}'> {{publisher}}</label>
 				</li>
@@ -61,7 +66,7 @@
 		<div class="col-md-9">
 			<h3>Results:</h3>
 			<span ng-show="loading">Loading....</span>
-			<ol class="datasets">
+			<ol class="datasets ng-cloak">
 				<li ng-repeat="item in items | filter:filterTitle | filter:filterCategory | filter:filterPublisher " class="">
 					<div class='main'><a class='primary' href="{{item.details}}">{{item.title}}</a></div>
 					<div class=''><span class='attribute'>Category</span>: {{item.category}}</div>
@@ -79,12 +84,13 @@
 		</div>
 </div>
 
+	<script type="text/javascript" src="dist/data.gov.bn-object.json"></script>
 	<script src="bower_components/angular/angular.min.js"></script>
 	<script>
 		"use strict";
-
+		console.log(data.length);
 		RegExp.escape= function(s) {
-		    return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+			return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 		};
 
 		function unique(data, key){
@@ -98,18 +104,20 @@
 			return values;
 		}
 		function dataGovBn($scope, $filter, $http){
+
 			$scope.loading = true;
-			$http.get("dist/data.gov.bn.json").success(function(data) {
-				for(var i = 0; i < data.length; i++){
-					for(var j = 0; j < data[i].datasets.length; j++){
-			    		data[i].datasets[j].title = data[i].datasets[j].title.replace("  ", " "); // filenames saved with single space when source link has double spaces
-					}
+			// comment out to allow running locally without needing web server
+			//$http.get("dist/data.gov.bn.json").success(function(data) {
+			for(var i = 0; i < data.length; i++){
+				for(var j = 0; j < data[i].datasets.length; j++){
+					data[i].datasets[j].title = data[i].datasets[j].title.replace("  ", " "); // filenames saved with single space when source link has double spaces
 				}
-				$scope.categories = unique(data, 'category').sort();
-				$scope.publishers = unique(data, 'publisher').sort();
-		    	$scope.items = data;
-		    	$scope.loading = false;
-			});
+			}
+			$scope.categories = unique(data, 'category').sort();
+			$scope.publishers = unique(data, 'publisher').sort();
+			$scope.items = data;
+			$scope.loading = false;
+			//});
 
 			$scope.filterOnAttributeInArray = function(item, array, attributeName){
 				var isMatch = true;
