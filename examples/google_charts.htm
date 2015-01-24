@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <script type="text/javascript" src="../dist/data.gov.bn-object.json"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawCharts);
+
+      function drawCharts(){
+        drawChart('category');
+        drawChart('publisher');
+      }
+      function drawChart(key) {
+        var counts = {};
+        for(var i = 0; i < data.length; i++){
+          if(!counts[data[i][key]]) counts[data[i][key]] = 0;
+          counts[data[i][key]]++;
+        }
+        var dataset = [[key, '# of datasets']];
+        for(var k in counts){
+            dataset.push([k, counts[k]]);
+        }
+
+        var gdata = google.visualization.arrayToDataTable(dataset);
+
+        var options = {
+          title: 'data.gov.bn breakdown by ' + key
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_' + key));
+
+        chart.draw(gdata, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="piechart_category" style="width: 900px; height: 500px;"></div>
+    <div id="piechart_publisher" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
