@@ -4,6 +4,8 @@ for [Brunei Geek Meet #6 - all about that data](http://www.meetup.com/BruneiGeek
 
 Data from: [http://data.gov.bn](http://data.gov.bn)
 
+Demo at [http://thewheat.github.io/data.gov.bn-data/](http://thewheat.github.io/data.gov.bn-data/)
+
 Folders
 
 - /dist
