@@ -1,0 +1,70 @@
+Special Cases for the following data
+
+=============================================================
+2 datasets with same attachment file names but different urls
+=============================================================
+
+    {
+        "category": "Agriculture, Forestry and Fishery",
+        "datasets": [
+            {
+                "link": "http://www.data.gov.bn/Lists/dataset/Attachments/71/IMPORT%20BY%20COUNTRY%20(2013).xlsx",
+                "title": "IMPORT BY COUNTRY (2013) (1).xlsx",
+                "titledup": "IMPORT BY COUNTRY (2013).xlsx"
+            }
+        ],
+        "details": "http://www.data.gov.bn/Lists/dataset/mdisplay.aspx?ID=71",
+        "publisher": "Ministry of Industry and Primary Resources",
+        "title": "IMPORT BY COUNTRY (2013)",
+        "updated": "Wednesday, December 3, 2014"
+    },
+    {
+        "category": "Agriculture, Forestry and Fishery",
+        "datasets": [
+            {
+                "link": "http://www.data.gov.bn/Lists/dataset/Attachments/72/IMPORT%20OF%20AGRICULTURE%20PRODUCT%20BY%20TYPES%20(2013).xlsx",
+                "title": IMPORT OF AGRICULTURE PRODUCT BY TYPES (2013) (1).xlsx",
+                "titledup": "IMPORT OF AGRICULTURE PRODUCT BY TYPES (2013).xlsx"
+            }
+        ],
+        "details": "http://www.data.gov.bn/Lists/dataset/mdisplay.aspx?ID=72",
+        "publisher": "Ministry of Industry and Primary Resources",
+        "title": "IMPORT OF AGRICULTURE PRODUCT BY TYPES (2013)",
+        "updated": "Wednesday, December 3, 2014"
+    },
+
+
+=============================================================
+2 datasets with broken HTML links in the listing page
+correct URL in the details page
+=============================================================
+
+    {
+        "category": "Education",
+        "datasets": [
+            {
+                "link": "http://www.data.gov.bn/Lists/dataset/Attachments/324/39%20-%20MOE%20-%20%202.1.10%20Teachers'%20Age%20Group%20By%20Level,%202012.xls",
+                "linkbroken": "http://www.data.gov.bn/Lists/dataset/Attachments/324/39%20-%20MOE%20-%20%202.1.10%20Teachers",
+                "title": "39 - MOE -  2.1.10 Teachers' Age Group By Level, 2012.xls"
+            }
+        ],
+        "details": "http://www.data.gov.bn/Lists/dataset/mdisplay.aspx?ID=324",
+        "publisher": "Ministry of Education",
+        "title": "Teachers' Age Group By Level (2012)",
+        "updated": "Wednesday, December 3, 2014"
+    },
+
+    {
+        "category": "Education",
+        "datasets": [
+            {
+                "link": "http://www.data.gov.bn/Lists/dataset/Attachments/357/5%20-%203.5%20Percentage%20Of%20Students%20Passed%20In%20With%205%20'O'%20And%20Above%20In%20O%20Level%20Examination%20By%20Sector%20(2002-2012).xls",
+                "linkbroken": "http://www.data.gov.bn/Lists/dataset/Attachments/357/5%20-%203.5%20Percentage%20Of%20Students%20Passed%20In%20With%205%20",
+                "title": "5 - 3.5 Percentage Of Students Passed In With 5 'O' And Above In O Level Examination By Sector (2002-2012).xls"
+            }
+        ],
+        "details": "http://www.data.gov.bn/Lists/dataset/mdisplay.aspx?ID=357",
+        "publisher": "Ministry of Education",
+        "title": "Percentage Of Students Passed In With 5 'O' And Above In O Level Examination By Sector",
+        "updated": "Wednesday, December 3, 2014"
+    },
