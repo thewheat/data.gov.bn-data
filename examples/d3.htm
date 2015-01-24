@@ -1,0 +1,95 @@
+<html>
+  <head>
+    <script type="text/javascript" src="../dist/data.gov.bn-object.json"></script>
+    <script type="text/javascript" src="d3.min.js"></script>
+    <script type="text/javascript">
+
+    function getCounts(data, key, filter){
+      var counts = {};
+      for(var i = 0; i < data.length; i++){
+          if(filter){
+            if(filter.publisher && data[i]['publisher'] != filter.publisher) continue;
+            if(filter.category && data[i]['category'] != filter.category) continue;
+          }
+          if(!counts[data[i][key]]) counts[data[i][key]] = 0;
+          counts[data[i][key]]++;
+      }
+      return counts;
+    }
+    function getValues(obj){
+      var values = [];
+      for(var key in obj){
+        values.push(obj[key]);
+      }
+      return values;
+    }
+    function drawByPublisher(data){
+      var counts = getCounts(data, 'publisher');
+      var circleRadii = [];
+      for(var key in counts){
+        circleRadii.push(counts[key]);
+      }
+      console.log(counts);
+      console.log(circleRadii);
+      drawCircles(counts);
+    }
+    function maxValue(data){
+      var max = 0;
+      for(var i = 0; i < data.length; i++){
+        if(i == 0) max = data[i];
+        if(data[i] > max) max = data[i];
+      }
+      return max;
+    }
+    function drawCircles(data, isPublisher){
+       var circleRadii = getValues(data);
+       var max = maxValue(circleRadii);
+       var svgContainer = d3.select("body").append("svg")
+                                           .attr("width", max * 2)
+                                           .attr("height", max * 2);
+       
+       var circles = svgContainer.selectAll("circle")
+                                 .data(circleRadii)
+                                 .enter()
+                                .append("circle")
+
+      var circleAttributes = circles
+                             .attr("cx", max)
+                             .attr("cy", max)
+                             .attr("r", function (d) { return d; })
+                             .style("fill", function(d,i) {
+                               var returnColor;
+                               if (i === 0) { returnColor = "green";}
+                               else if (i === 1) { returnColor = "purple";}
+                               else if (i === 2) { returnColor = "red"; }
+                               else if (i === 3) { returnColor = "blue"; }
+                               else if (i === 4) { returnColor = "orange"; }
+                               else if (i === 5) { returnColor = "yellow"; }
+                               else if (i === 6) { returnColor = "brown"; }
+                               else if (i === 7) { returnColor = "black"; }
+                               return returnColor;
+                             });
+       
+
+    }
+    window.onload = function(){
+      drawByPublisher(data);
+    }
+/*
+var theData = [ 1, 2, 3 ]
+
+var p = d3.select("body").selectAll("p")
+  .data(theData)
+  .enter()
+  .append("p");
+
+
+ circleRadii = [40, 20, 10]
+ 
+//*/
+
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
